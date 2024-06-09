@@ -10,7 +10,7 @@
   <%- include('includes/header') %>
     <main id="all-posts">
       <h1>All Posts</h1>
-      <% if(!posts ||posts.length===0){ %>
+      <% if(!posts || posts.length===0){ %>
         <p>No posts found - maybe start creating some?</p>
         <a class="btn" href="/new-post">Create a new post</a>
         <%} else { %>
