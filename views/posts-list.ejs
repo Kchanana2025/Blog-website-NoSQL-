@@ -17,12 +17,12 @@
 
           <ol id="posts-list">
             <% for (const post of posts) { %>
-              <li>
+              <ul>
                 <%- include('includes/post-item',{post:post}) %>
-              </li>
+              </ul>
+              <% } %>
           </ol>
           <% } %>
-            <% } %>
     </main>
 </body>
 
