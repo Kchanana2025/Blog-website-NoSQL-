@@ -45,10 +45,23 @@ router.post('/posts', async function (req, res) {
   res.redirect('/posts');
 });
 
-router.get('/posts/:id', async function (req, res) {
-  const postId = req.params.id;
-  const post = await db.getDb().collection('posts')
-    .findOne({ _id: new ObjectId(postId) }, { summary: 0 });
+router.get('/posts/:id', async function (req, res, next) {
+  let postId = req.params.id;
+
+  try {
+    postId = new ObjectId(postId);//if user galti se enters a invalid id toh mongodb error throw krega aur phir error catching middle ware ke pass cantrol nahi jaa payega (because error has occured in asyncronous function) isliye hamien try catch statements lgani padhegi.
+  }
+  catch (error) {
+    console.log(error);
+    return res.status(404).render('404');
+
+    //OR
+    //return next(error);
+  }
+  const post = await db
+    .getDb()
+    .collection('posts')
+    .findOne({ _id: postId }, { summary: 0 });
 
   if (!post) {
     return res.status(404).render('404');
@@ -104,6 +117,7 @@ router.post('/posts/:id/delete', async function (req, res) {
 
   res.redirect('/posts');
 });
+//ek post request ke baad hmesha redirect krnaa hota hai kahi toh nahi toh like apne kaam kr lia jo aap krna chahte thee uske baad aap btaoge bhi toh ki jana kaha hai karoge.
 
 
 module.exports = router;
