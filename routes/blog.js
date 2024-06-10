@@ -40,7 +40,7 @@ router.post('/posts', async function (req, res) {
       email: author.email
     }
   };
-  const result = await db.getDb().collection('posts').insertOne({ newPost });
+  const result = await db.getDb().collection('posts').insertOne(newPost);
   console.log(result);
   res.redirect('/posts');
 });
